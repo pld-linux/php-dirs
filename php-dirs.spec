@@ -1,4 +1,5 @@
 Summary:	Common dirs for different PHP versions
+Summary(pl):	Wspólne katalogi dla ró¿nych wersji PHP
 Name:		php-dirs
 Version:	0.9
 Release:	0.1
@@ -16,6 +17,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Common directories for PHP version 4 and version 5.
+
+%description -l pl
+Wspólne katalogi dla PHP w wersji 4 oraz 5.
 
 %prep
 
