@@ -2,7 +2,7 @@ Summary:	Common dirs for different PHP versions
 Summary(pl):	Wspólne katalogi dla ró¿nych wersji PHP
 Name:		php-dirs
 Version:	1.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Base
 BuildRequires:	rpmbuild(macros) >= 1.202
