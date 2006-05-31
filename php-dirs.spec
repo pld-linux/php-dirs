@@ -44,4 +44,4 @@ fi
 %defattr(644,root,root,755)
 %dir %{_datadir}/php
 %attr(770,root,http) %dir %verify(not group mode) /var/run/php
-%attr(644,root,root) %config(noreplace) %verify(not md5 mtime size) %{_tmpwatchdir}/php.conf
+%config(noreplace) %verify(not md5 mtime size) %{_tmpwatchdir}/php.conf
