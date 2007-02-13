@@ -1,5 +1,5 @@
 Summary:	Common dirs for different PHP versions
-Summary(pl.UTF-8):   Wspólne katalogi dla różnych wersji PHP
+Summary(pl.UTF-8):	Wspólne katalogi dla różnych wersji PHP
 Name:		php-dirs
 Version:	1.0
 Release:	3
