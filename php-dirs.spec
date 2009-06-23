@@ -2,7 +2,7 @@ Summary:	Common dirs for different PHP versions
 Summary(pl.UTF-8):	Wspólne katalogi dla różnych wersji PHP
 Name:		php-dirs
 Version:	1.1
-Release:	3
+Release:	4
 License:	GPL
 Group:		Base
 BuildRequires:	rpmbuild(macros) >= 1.461
@@ -47,5 +47,7 @@ fi
 %dir %{php_data_dir}
 %dir %{php_data_dir}/tests
 %dir %{_docdir}/phpdoc
-%attr(770,root,http) %dir %verify(not group mode) /var/run/php
+# http needs only x for directory (otherwise it knows session file
+# names and can read it contents)
+%attr(710,root,http) %dir %verify(not group mode) /var/run/php
 %config(noreplace) %verify(not md5 mtime size) %{_tmpwatchdir}/php.conf
