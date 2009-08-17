@@ -10,6 +10,7 @@ BuildRequires:	rpmbuild(macros) >= 1.461
 Requires(postun):	/usr/sbin/groupdel
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
+Requires:	tmpwatch
 Provides:	group(http)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
