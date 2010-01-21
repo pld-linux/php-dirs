@@ -2,7 +2,7 @@ Summary:	Common dirs for different PHP versions
 Summary(pl.UTF-8):	Wspólne katalogi dla różnych wersji PHP
 Name:		php-dirs
 Version:	1.1
-Release:	7
+Release:	8
 License:	GPL
 Group:		Base
 Source0:	php-session.sh
@@ -10,7 +10,7 @@ BuildRequires:	rpmbuild(macros) >= 1.461
 Requires(postun):	/usr/sbin/groupdel
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
-Requires:	tmpwatch
+Suggests:	tmpwatch
 Provides:	group(http)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
