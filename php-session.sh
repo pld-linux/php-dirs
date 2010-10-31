@@ -14,12 +14,8 @@ elif [ -r /etc/php4/php.ini ]; then
 	RUNTIME4=$(awk -F"=" '/^session.gc_maxlifetime[ \t]*=/ { t=sprintf("%d", ($2/3600)); if (t<1) { t=1; }; print t; exit;}' /etc/php4/php.ini)
 fi
 
-[ -z "$RUNTIME5" ] && RUNTIME5="1h"
+[ -z "$RUNTIME5" ] && [ -z "$RUNTIME4" ] && exit
 
-if [ -n "$RUNTIME5" ]; then
-	/usr/sbin/tmpwatch ${RUNTIME5} /var/run/php
-fi
+[ "${RUNTIME4:-0}" -ge "${RUNTIME5:-0}" ] && RUNTIME=$((RUNTIME4)) || RUNTIME=$((RUNTIME5))
 
-if [ -n "$RUNTIME4" -a "$RUNTIME5" != "$RUNTIME4" ]; then
-	/usr/sbin/tmpwatch ${RUNTIME4} /var/run/php
-fi
+/usr/sbin/tmpwatch ${RUNTIME} /var/run/php

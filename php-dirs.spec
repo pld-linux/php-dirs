@@ -2,7 +2,7 @@ Summary:	Common dirs for different PHP versions
 Summary(pl.UTF-8):	Wspólne katalogi dla różnych wersji PHP
 Name:		php-dirs
 Version:	1.1
-Release:	8
+Release:	9
 License:	GPL
 Group:		Base
 Source0:	php-session.sh
