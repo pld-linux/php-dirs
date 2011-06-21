@@ -1,3 +1,6 @@
+# TODO
+# - move tmpwatch S: to php-session package (as session files file storage no
+#   longer can cleanup itself due dir perms)
 Summary:	Common dirs for different PHP versions
 Summary(pl.UTF-8):	Wspólne katalogi dla różnych wersji PHP
 Name:		php-dirs
@@ -27,8 +30,7 @@ Wspólne katalogi dla PHP w wersji 4 oraz 5.
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{php_data_dir}/tests,/etc/cron.hourly,/var/run/php}
 install -d $RPM_BUILD_ROOT%{_docdir}/phpdoc
-
-install %{SOURCE0} $RPM_BUILD_ROOT/etc/cron.hourly
+install -p %{SOURCE0} $RPM_BUILD_ROOT/etc/cron.hourly
 
 %clean
 rm -rf $RPM_BUILD_ROOT
