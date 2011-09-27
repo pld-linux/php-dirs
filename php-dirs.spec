@@ -5,7 +5,7 @@ Summary:	Common dirs for different PHP versions
 Summary(pl.UTF-8):	Wspólne katalogi dla różnych wersji PHP
 Name:		php-dirs
 Version:	1.2
-Release:	1
+Release:	2
 License:	GPL
 Group:		Base
 Source0:	php-session.sh
@@ -50,5 +50,6 @@ fi
 %dir %{_docdir}/phpdoc
 # http needs only x for directory (otherwise it knows session file
 # names and can read it contents)
-%attr(730,root,http) %dir %verify(not group mode) /var/run/php
+# keep o+x for fcgi.sock (lighttpd)
+%attr(731,root,http) %dir %verify(not group mode) /var/run/php
 %attr(755,root,root) %{_sysconfdir}/cron.hourly/php-session.sh
