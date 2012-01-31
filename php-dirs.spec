@@ -9,6 +9,7 @@ Release:	2
 License:	GPL
 Group:		Base
 Source0:	php-session.sh
+Source1:	%{name}.tmpfiles
 BuildRequires:	rpmbuild(macros) >= 1.461
 Requires(postun):	/usr/sbin/groupdel
 Requires(pre):	/usr/bin/getgid
@@ -28,9 +29,12 @@ Wspólne katalogi dla PHP w wersji 4 oraz 5.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{php_data_dir}/tests,/etc/cron.hourly,/var/run/php}
-install -d $RPM_BUILD_ROOT%{_docdir}/phpdoc
+install -d $RPM_BUILD_ROOT{%{php_data_dir}/tests,/etc/cron.hourly,/var/run/php} \
+	$RPM_BUILD_ROOT%{_docdir}/phpdoc \
+	$RPM_BUILD_ROOT/usr/lib/tmpfiles.d
+
 install -p %{SOURCE0} $RPM_BUILD_ROOT/etc/cron.hourly
+install %{SOURCE1} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -48,6 +52,7 @@ fi
 %dir %{php_data_dir}
 %dir %{php_data_dir}/tests
 %dir %{_docdir}/phpdoc
+/usr/lib/tmpfiles.d/%{name}.conf
 # http needs only x for directory (otherwise it knows session file
 # names and can read it contents)
 # keep o+x for fcgi.sock (lighttpd)
