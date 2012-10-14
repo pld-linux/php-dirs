@@ -4,13 +4,13 @@
 Summary:	Common dirs for different PHP versions
 Summary(pl.UTF-8):	Wspólne katalogi dla różnych wersji PHP
 Name:		php-dirs
-Version:	1.2
-Release:	3
+Version:	1.3
+Release:	1
 License:	GPL
 Group:		Base
 Source0:	php-session.sh
 Source1:	%{name}.tmpfiles
-BuildRequires:	rpmbuild(macros) >= 1.461
+BuildRequires:	rpmbuild(macros) >= 1.644
 Requires(postun):	/usr/sbin/groupdel
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
@@ -29,12 +29,12 @@ Wspólne katalogi dla PHP w wersji 4 oraz 5.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{php_data_dir}/tests,/etc/cron.hourly,/var/run/php} \
+install -d $RPM_BUILD_ROOT{%{php_data_dir}/tests,/etc/cron.hourly,/var/{run,log}/php} \
 	$RPM_BUILD_ROOT%{_docdir}/phpdoc \
-	$RPM_BUILD_ROOT/usr/lib/tmpfiles.d
+	$RPM_BUILD_ROOT%{systemdtmpfilesdir}
 
 install -p %{SOURCE0} $RPM_BUILD_ROOT/etc/cron.hourly
-install %{SOURCE1} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
+cp -p %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -49,12 +49,13 @@ fi
 
 %files
 %defattr(644,root,root,755)
+%{systemdtmpfilesdir}/%{name}.conf
+%attr(755,root,root) %{_sysconfdir}/cron.hourly/php-session.sh
 %dir %{php_data_dir}
 %dir %{php_data_dir}/tests
 %dir %{_docdir}/phpdoc
-/usr/lib/tmpfiles.d/%{name}.conf
+%attr(775,root,http) %dir %verify(not group mode) /var/log/php
 # http needs only x for directory (otherwise it knows session file
 # names and can read it contents)
 # keep o+x for fcgi.sock (lighttpd)
 %attr(731,root,http) %dir %verify(not group mode) /var/run/php
-%attr(755,root,root) %{_sysconfdir}/cron.hourly/php-session.sh
