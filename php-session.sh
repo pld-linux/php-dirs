@@ -1,21 +1,23 @@
 #!/bin/sh
 
-[ -x /usr/sbin/tmpwatch ] || exit
+[ -x /usr/sbin/tmpwatch ] || exit 0
 
-if [ -x /usr/bin/php ]; then
-	RUNTIME5=$(/usr/bin/php -r 'echo max(round(ini_get("session.gc_maxlifetime")/3600), 1);' 2> /dev/null)
-elif [ -r /etc/php/php.ini ]; then
-	RUNTIME5=$(awk -F"=" '/^session.gc_maxlifetime[ \t]*=/ { t=sprintf("%d", ($2/3600)); if (t<1) { t=1; }; print t; exit;}' /etc/php/php.ini)
-fi
+session_dir=/var/run/php
+# find minimum gc time from any of the php engines
+gc_time=0
+for php in php php4 php52 php53 php54 php55; do
+	gc=
+	if [ -x /usr/bin/$php ]; then
+		gc=$($php -r 'echo max(round(ini_get("session.gc_maxlifetime")/3600), 1);' 2> /dev/null)
+	elif [ -r /etc/$php/php.ini ]; then
+		gc=$(awk -F"=" '/^session.gc_maxlifetime[ \t]*=/ { t=sprintf("%d", ($2/3600)); if (t<1) { t=1; }; print t; exit;}' /etc/$php/php.ini)
+	fi
+	[ -n "$gc" ] || continue
 
-if [ -x /usr/bin/php4 ]; then
-	RUNTIME4=$(/usr/bin/php4 -r 'echo max(round(ini_get("session.gc_maxlifetime")/3600), 1);' 2> /dev/null)
-elif [ -r /etc/php4/php.ini ]; then
-	RUNTIME4=$(awk -F"=" '/^session.gc_maxlifetime[ \t]*=/ { t=sprintf("%d", ($2/3600)); if (t<1) { t=1; }; print t; exit;}' /etc/php4/php.ini)
-fi
+	if [ "$gc" -lt "$gc_time" ] || [ $gc_time -eq 0 ]; then
+		gc_time=$gc
+	fi
+done
 
-[ -z "$RUNTIME5" ] && [ -z "$RUNTIME4" ] && exit
-
-[ "${RUNTIME4:-0}" -ge "${RUNTIME5:-0}" ] && RUNTIME=$((RUNTIME4)) || RUNTIME=$((RUNTIME5))
-
-/usr/sbin/tmpwatch ${RUNTIME} /var/run/php
+[ $gc_time -gt 0 ] || exit 0
+/usr/sbin/tmpwatch $gc_time $session_dir
