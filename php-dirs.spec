@@ -5,7 +5,7 @@ Summary:	Common dirs for different PHP versions
 Summary(pl.UTF-8):	Wspólne katalogi dla różnych wersji PHP
 Name:		php-dirs
 Version:	1.4
-Release:	1
+Release:	2
 License:	GPL
 Group:		Base
 Source0:	php-session.sh
@@ -29,7 +29,7 @@ Wspólne katalogi dla PHP w wersji 4 oraz 5.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{php_data_dir}/tests,/etc/cron.hourly,/var/{cache,log,run}/php} \
+install -d $RPM_BUILD_ROOT{%{php_data_dir}/tests,/etc/cron.hourly,/var/{cache,log,run}/php,/var/log/archive/php} \
 	$RPM_BUILD_ROOT%{_docdir}/phpdoc \
 	$RPM_BUILD_ROOT%{systemdtmpfilesdir}
 
@@ -55,6 +55,7 @@ fi
 %dir %{php_data_dir}/tests
 %dir %{_docdir}/phpdoc
 %attr(775,root,http) %dir %verify(not group mode) /var/log/php
+%attr(770,root,root) %dir %verify(not group mode) /var/log/archive/php
 # no +r, so only predictable names can be used. currently php-soap wsdl cache is there
 %attr(730,root,http) %dir %verify(not group mode) /var/cache/php
 # http needs only x for directory (otherwise it knows session file
