@@ -5,7 +5,7 @@ Summary:	Common dirs for different PHP versions
 Summary(pl.UTF-8):	Wspólne katalogi dla różnych wersji PHP
 Name:		php-dirs
 Version:	1.4
-Release:	3
+Release:	2
 License:	GPL
 Group:		Base
 Source0:	php-session.sh
@@ -33,7 +33,7 @@ install -d $RPM_BUILD_ROOT{%{php_data_dir}/tests,/etc/cron.hourly,/var/{cache,lo
 	$RPM_BUILD_ROOT%{_docdir}/phpdoc \
 	$RPM_BUILD_ROOT%{systemdtmpfilesdir}
 
-install -p %{SOURCE0} $RPM_BUILD_ROOT/etc/cron.hourly/php-session
+install -p %{SOURCE0} $RPM_BUILD_ROOT/etc/cron.hourly
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
 %clean
@@ -50,7 +50,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %{systemdtmpfilesdir}/%{name}.conf
-%attr(755,root,root) %{_sysconfdir}/cron.hourly/php-session
+%attr(755,root,root) %{_sysconfdir}/cron.hourly/php-session.sh
 %dir %{php_data_dir}
 %dir %{php_data_dir}/tests
 %dir %{_docdir}/phpdoc
