@@ -20,4 +20,12 @@ for php in php php4 php52 php53 php54 php55; do
 done
 
 [ $gc_time -gt 0 ] || exit 0
-/usr/sbin/tmpwatch $gc_time $session_dir
+
+# use tmpwatch with --test to remove only files matching to 'sess_*' pattern
+/usr/sbin/tmpwatch $gc_time $session_dir --test | while read action type file; do
+	case "$action $type $file" in
+	'removing file '*/sess_*)
+		rm "$file"
+		;;
+	esac
+done
