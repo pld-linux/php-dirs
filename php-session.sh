@@ -8,6 +8,8 @@ session_dirs="/var/run/php /var/run/php-ug"
 cleanup_dir() {
 	local session_dir=$1
 
+	test -d "$session_dir" || return
+
 	/usr/sbin/tmpwatch $gc_time $session_dir --test | while read action type file; do
 		case "$action $type $file" in
 		'removing file '*/sess_*)
@@ -42,3 +44,5 @@ find_gc_time
 for session_dir in $session_dirs; do
 	cleanup_dir $session_dir
 done
+
+exit 0
