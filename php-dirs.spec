@@ -1,6 +1,7 @@
 # TODO
 # - move tmpwatch S: to php-session package (as session files file storage no
 #   longer can cleanup itself due dir perms)
+# - https://fedorahosted.org/tmpwatch/ticket/7 is implemented in tmpwatch-2.9.16, see 3467603 todo
 Summary:	Common dirs for PHP
 Summary(pl.UTF-8):	Wspólne katalogi dla PHP
 Name:		php-dirs
