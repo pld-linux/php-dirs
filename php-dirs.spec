@@ -4,12 +4,13 @@
 Summary:	Common dirs for PHP
 Summary(pl.UTF-8):	Wspólne katalogi dla PHP
 Name:		php-dirs
-Version:	1.6
+Version:	1.7
 Release:	1
 License:	GPL
 Group:		Base
 Source0:	php-session.sh
 Source1:	%{name}.tmpfiles
+Source2:	crontab
 BuildRequires:	rpmbuild(macros) >= 1.644
 Requires(postun):	/usr/sbin/groupdel
 Requires(pre):	/usr/bin/getgid
@@ -19,6 +20,8 @@ Conflicts:	php-pear < 4:1.4-2
 Provides:	group(http)
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		_libexecdir	%{_prefix}/lib
 
 %description
 Common directories for PHP.
@@ -30,12 +33,14 @@ Wspólne katalogi dla PHP.
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{/etc/cron.hourly,/var/{cache,log,run}/php,/var/log/archive/php} \
+install -d $RPM_BUILD_ROOT{/etc/cron.d,/var/{cache,log,run}/php,/var/log/archive/php} \
 	$RPM_BUILD_ROOT%{_docdir}/phpdoc \
+	$RPM_BUILD_ROOT%{_libexecdir} \
 	$RPM_BUILD_ROOT%{systemdtmpfilesdir}
 
-install -p %{SOURCE0} $RPM_BUILD_ROOT/etc/cron.hourly
+install -p %{SOURCE0} $RPM_BUILD_ROOT%{_libexecdir}
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/cron.d/php-session
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
@@ -58,8 +63,9 @@ fi
 
 %files
 %defattr(644,root,root,755)
+%config(noreplace) %verify(not md5 mtime size) /etc/cron.d/php-session
 %{systemdtmpfilesdir}/%{name}.conf
-%attr(755,root,root) %{_sysconfdir}/cron.hourly/php-session.sh
+%attr(755,root,root) %{_libexecdir}/php-session.sh
 %{php_data_dir}
 
 %dir %{_docdir}/phpdoc
