@@ -23,7 +23,7 @@ cleanup_dir() {
 find_gc_time() {
 	gc_time=0
 	local gc php
-	for php in php php4 php52 php53 php54 php55 php56; do
+	for php in php php4 php52 php53 php54 php55 php56 php70; do
 		gc=
 		if [ -x /usr/bin/$php ]; then
 			gc=$($php -r 'echo max(round(ini_get("session.gc_maxlifetime")/3600), 1);' 2> /dev/null)
