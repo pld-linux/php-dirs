@@ -1,11 +1,11 @@
 # TODO
-# - move tmpwatch S: to php-session package (as session files file storage no
+# - move tmpwatch R: to php-session package (as session files file storage no
 #   longer can cleanup itself due dir perms)
 # - https://fedorahosted.org/tmpwatch/ticket/7 is implemented in tmpwatch-2.9.16, see 3467603 todo
 Summary:	Common dirs for PHP
 Summary(pl.UTF-8):	Wspólne katalogi dla PHP
 Name:		php-dirs
-Version:	1.8
+Version:	1.9
 Release:	1
 License:	GPL
 Group:		Base
@@ -16,7 +16,7 @@ BuildRequires:	rpmbuild(macros) >= 1.644
 Requires(postun):	/usr/sbin/groupdel
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
-Suggests:	tmpwatch
+Requires:	tmpwatch
 Conflicts:	php-pear < 4:1.4-2
 Provides:	group(http)
 BuildArch:	noarch
