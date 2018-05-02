@@ -5,7 +5,7 @@
 Summary:	Common dirs for PHP
 Summary(pl.UTF-8):	Wspólne katalogi dla PHP
 Name:		php-dirs
-Version:	1.9
+Version:	1.10
 Release:	1
 License:	GPL
 Group:		Base
