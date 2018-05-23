@@ -41,7 +41,7 @@ install -d $RPM_BUILD_ROOT{/etc/cron.d,/var/{cache,log,run}/php,/var/log/archive
 
 install -p %{SOURCE0} $RPM_BUILD_ROOT%{_libexecdir}
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
-cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/cron.d/php-session
+sed -e 's,@libexecdir@,%{_libexecdir},' %{SOURCE2} >$RPM_BUILD_ROOT/etc/cron.d/php-session
 
 while read dir; do
 	install -d $RPM_BUILD_ROOT$dir
